@@ -69,8 +69,8 @@
                 </configuration>
             </plugin>
             
-            <plugin>
-                <groupId>com.sebastian-daschner</groupId>
+            <plugin>    
+                            <groupId>com.sebastian-daschner</groupId>
                 <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
                 <version>0.12</version>
                 <executions>
@@ -79,12 +79,14 @@
                             <goal>analyze-jaxrs</goal>
                         </goals>
                         <configuration>
-                            <backend>swagger</backend>    
+                            <!-- Available backends are plaintext (default), swagger and asciidoc -->
+                            <backend>swagger</backend>
+                            <!-- Domain of the deployed project, defaults to example.com -->
+                            <deployedDomain>api.example.com</deployedDomain>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
         
     </build>
@@ -95,14 +97,14 @@
         <dependency>
             <groupId>com.github.rac021</groupId>
             <artifactId>G-Jax-Security-Provider</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         
         <!-- G-Jax-Service-Discovery Dependency -->         
         <dependency>
             <groupId>com.github.rac021</groupId>
             <artifactId>G-Jax-Service-Discovery</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         
         <!-- WildFly Swarm Dependencies -->                  
@@ -150,7 +152,7 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.23</version>
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.cnrs.osuc</groupId>
             <artifactId>snot-fluxmeteo-services-api</artifactId>
             <version>${sno.version}</version>
@@ -167,18 +169,24 @@
             <version>2.3.1</version>
             <type>jar</type>
         </dependency>      
-<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.9.8</version>
-    </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.0</version>
+        </dependency>
     
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>2.9.8</version>
-    </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.rac021</groupId>
+            <artifactId>G-Jax-Api</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <name>PivotMetadata</name>
 </project>
