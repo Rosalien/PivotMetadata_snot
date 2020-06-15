@@ -171,7 +171,7 @@ public class MetadataFabrique {
 //        System.out.println(requete);
         String accessUseConstraint = (String) requete[1];
         String urlDataPolicy = "https://data-snot.cnrs.fr/snot/mentionLegale.jsf";
-        String acknowledgment = "'The SNO Tourbières observing system https://www.sno-tourbieres.cnrs.fr/ was set up thanks to an incentive funding of the French Ministry of Research that allowed pooling together various pre-existing small scale observing setups. The continuity and long term perenity of the measurements are made possible by an undisrupted and continuous CNRS-INSU funding since 2008'";
+        String acknowledgment = "'The SNO Tourbières observing system https://www.sno-tourbieres.cnrs.fr/ was set up thanks to an incentive funding of the French Ministry of Research that allowed pooling together various pre-existing small scale observing setups. The continuity and long term perenity of the measurements are made possible by an undisrupted and continuous CNRS funding since 2008'";
         String titre_licence = (String) requete[2];
         String url_licence = (String) requete[3];
 
