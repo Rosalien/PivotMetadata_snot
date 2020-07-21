@@ -5,15 +5,11 @@
  */
 package moulinette.jpa;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import moulinette.entity.Jeu;
 import moulinette.entity.SiteSnot;
-import moulinette.entity.Variable;
-import org.bouncycastle.pqc.math.linearalgebra.Vector;
 
 /**
  *

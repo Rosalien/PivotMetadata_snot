@@ -33,7 +33,6 @@ import moulinette.element.producer.Producer;
 import moulinette.element.observation.Observation;
 import moulinette.jpa.JPAQueryDAO;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;

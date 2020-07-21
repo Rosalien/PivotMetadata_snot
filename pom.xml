@@ -4,7 +4,7 @@
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.rac021</groupId>
-    <artifactId>Connexion</artifactId>
+    <artifactId>PivotMetadata</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
     
@@ -14,7 +14,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <packaging.type>war</packaging.type>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <version.wildfly.swarm>2017.3.2</version.wildfly.swarm>
+        <version.wildfly.swarm>2018.3.3</version.wildfly.swarm>
         <kernel.version>1709.02-SNAPSHOT</kernel.version>
         <sno.version>1902.01-SNAPSHOT</sno.version>
     </properties>
@@ -23,7 +23,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom-all</artifactId>
+                <artifactId>bom</artifactId>
                 <version>${version.wildfly.swarm}</version>
                 <scope>import</scope>
                 <type>pom</type>
@@ -69,24 +69,22 @@
                 </configuration>
             </plugin>
             
-            <plugin>    
-                            <groupId>com.sebastian-daschner</groupId>
+            <plugin>
+                <groupId>com.sebastian-daschner</groupId>
                 <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
-                <version>0.12</version>
+                <version>0.16</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>analyze-jaxrs</goal>
                         </goals>
                         <configuration>
-                            <!-- Available backends are plaintext (default), swagger and asciidoc -->
-                            <backend>swagger</backend>
-                            <!-- Domain of the deployed project, defaults to example.com -->
-                            <deployedDomain>api.example.com</deployedDomain>
+                            <backend>swagger</backend>    
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
         
     </build>
@@ -111,34 +109,42 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>microprofile</artifactId>
+            <version>${version.wildfly.swarm}</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>jpa-eclipselink</artifactId>
+            <version>${version.wildfly.swarm}</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>management</artifactId>
+            <version>${version.wildfly.swarm}</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>management-console</artifactId>	
+            <version>${version.wildfly.swarm}</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>transactions</artifactId>
+            <version>${version.wildfly.swarm}</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>msc</artifactId>
+            <version>${version.wildfly.swarm}</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>ejb</artifactId>
+            <version>${version.wildfly.swarm}</version>
         </dependency>     
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>keycloak</artifactId>
+            <version>${version.wildfly.swarm}</version>
         </dependency>
 
         <!-- Postgresql JDBC Driver-->
@@ -166,28 +172,21 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.3.1</version>
+            <version>2.8.6</version>
             <type>jar</type>
         </dependency>      
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.11.0</version>
+            <version>2.11.1</version>
         </dependency>
     
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.rac021</groupId>
-            <artifactId>G-Jax-Api</artifactId>
-            <version>1.0</version>
-            <type>jar</type>
+            <version>2.11.1</version>
         </dependency>
     </dependencies>
     <name>PivotMetadata</name>
 </project>
-
