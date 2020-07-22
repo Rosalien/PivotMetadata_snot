@@ -82,13 +82,13 @@ public class JPAQueryDAO {
             + "and localization like 'en' "
             + "and colonne like 'nom'";
 
-        public List<Object[]> getStationsName(String sitePath) {
+    public List<Object[]> getStationsName(String sitePath) {
         return entityManager
                 .createNativeQuery(queryStationsName)
                 .setParameter(1, sitePath)
                 .getResultList();
     }
-    
+
     String queryCoordinates = "SELECT "
             + "zet_coordonnees_bbox "
             + "FROM site_snot "
@@ -148,7 +148,7 @@ public class JPAQueryDAO {
                 .createNativeQuery(queryAllRealNodePath)
                 .getResultList();
     }
-    
+
     //Requête pour récupérer tous les JDD du SNO-T
     String queryAllCodesJeu = "SELECT "
             + "distinct code_jeu "
@@ -159,8 +159,7 @@ public class JPAQueryDAO {
                 .createNativeQuery(queryAllCodesJeu)
                 .getResultList();
     }
-        
-//    En anglais, à tester
+
     String queryVariablesUnite = "SELECT "
             + "distinct cn.code as nom, localestring as definition_en, u.code as unite, theiacategories, missingvalue,path,definition as definition_fr "
             + "FROM variable as v "
@@ -195,9 +194,24 @@ public class JPAQueryDAO {
                 .setParameter(1, realnodePath)
                 .getResultList();
     }
+//
+//        String queryMissingvalue = "SELECT "
+//            + "missingvalue "
+//            + "FROM variable as v "
+//            + "inner join datatype_unite_variable_snot_vdt as dtuvsnot on dtuvsnot.id = v.var_id "
+//            + "inner join unite as u on u.uni_id = dtuvsnot.uni_id "
+//            + "inner join realnode as rn on rn.id_nodeable = dtuvsnot.sdvu_id "
+//            + "inner join variable_snot as vsnot on vsnot.var_id=v.var_id "
+//            + "where rn.path = ?1";
+//
+//    public List<String> getMissingvalue(String realnodePath) {
+//        return entityManager
+//                .createNativeQuery(queryMissingvalue)
+//                .setParameter(1, realnodePath)
+//                .getResultList();
+//    }
 
-//    En anglais, à tester
-    String querySensor = "SELECT distinct date_debut, "
+    String querySensorOld = "SELECT distinct date_debut, "
             + "(CASE "
             + "      WHEN date_fin is null "
             + "      THEN( "
@@ -249,6 +263,28 @@ public class JPAQueryDAO {
             + " and l.colonne like 'description' "
             + " )a ";
 
+    String querySensor = " SELECT distinct date_debut,"
+            + "(CASE "
+            + "WHEN date_fin is null "
+            + "THEN( "
+            + "select to_char(max(maxdate),'YYYY-MM-DDThh:mm:ssZ') as date_fin "
+            + "from carac_data_sensor_method_prod "
+            + "where code_jeu like ?2 "
+            + "group by code_jeu "
+            + ") "
+            + "ELSE date_fin "
+            + "END), code,fabricant,libelle_en,infos_calibration "
+            + "from ( "
+            + "SELECT rn.path, "
+            + "to_char(date_debut, 'YYYY-MM-DDThh:mm:ssZ') date_debut, to_char(date_fin, 'YYYY-MM-DDThh:mm:ssZ') date_fin,code,fabricant,localestring as libelle_en,infos_calibration,libelle as libelle_fr "
+            + "FROM instrument as i "
+            + "inner join periode_utilisation_instrument as pui on pui.instr_id=i.instr_id "
+            + "inner join realnode as rn on rn.id=pui.stdtvar_id "
+            + "inner join localisation as l on l.defaultstring=description "
+            + "where rn.path = ?1 "
+            + "and l.colonne like 'description' "
+            + ")a ";
+
     public List<Object[]> getPhysicalSensor(String realnodePath, String codeJeu) {
 
         return entityManager
@@ -276,23 +312,7 @@ public class JPAQueryDAO {
                 .getResultList();
     }
 
-    String queryMissingvalue = "SELECT "
-            + "missingvalue "
-            + "FROM variable as v "
-            + "inner join datatype_unite_variable_snot_vdt as dtuvsnot on dtuvsnot.id = v.var_id "
-            + "inner join unite as u on u.uni_id = dtuvsnot.uni_id "
-            + "inner join realnode as rn on rn.id_nodeable = dtuvsnot.sdvu_id "
-            + "inner join variable_snot as vsnot on vsnot.var_id=v.var_id "
-            + "where rn.path = ?1";
-
-    public List<String> getMissingvalue(String realnodePath) {
-        return entityManager
-                .createNativeQuery(queryMissingvalue)
-                .setParameter(1, realnodePath)
-                .getResultList();
-    }
-
-    String queryTemporalExtent = "SELECT date_debut,date_fin "
+    String queryTemporalExtentOld = "SELECT date_debut,date_fin "
             + "from ("
             + "select min(date_debut) as date_debut,max(date_fin) as date_fin "
             + "from "
@@ -326,6 +346,12 @@ public class JPAQueryDAO {
             + "where code_jeu like ?1 "
             + "group by code_jeu "
             + ")b ";
+
+    // A tester pour remplacer queryTemporalExtentOld trop long
+    String queryTemporalExtent = "select to_char(mindate,'YYYY-MM-DDThh:mm:ssZ') as date_debut,to_char(maxdate,'YYYY-MM-DDThh:mm:ssZ') as date_fin "
+            + "from "
+            + "carac_data_sensor_method_prod "
+            + "where code_jeu like ?1 ";
 
     public List<Object[]> getTemporalExtentValue(String codeJeu) {
         return entityManager

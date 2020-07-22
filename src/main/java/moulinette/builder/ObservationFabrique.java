@@ -146,7 +146,8 @@ public class ObservationFabrique {
         Object[] requete = requeteDAO.getVariablesUnite(realNodePath).get(0);
         String variable = (String) requete[0];
         String description = (String) requete[1];
-        String unite = (String) requete[2];
+        String unite = (String) requete[2];       
+//        List<String> theiacategories = (List<String>) requete[3];
         List<String> theiacategories = requeteDAO.getTheia(realNodePath);
 
         ObservedProperty observedProperty = new ObservedProperty(variable, description, unite);
@@ -258,9 +259,11 @@ public class ObservationFabrique {
         final DataFile dataFile = new DataFile("TOUR_OBS_" + observationId + ".txt");
         final NumericalResult numericalResult = new NumericalResult(dataFile);
 
-        List<String> missingvalue = requeteDAO.getMissingvalue(realNodePath);
-        numericalResult.setMissingValue(missingvalue.get(0));
+//        List<String> missingvalue = requeteDAO.getMissingvalue(realNodePath);
 
+        Object[] requete = requeteDAO.getVariablesUnite(realNodePath).get(0);
+        String missingvalue = (String) requete[4];     
+        numericalResult.setMissingValue(missingvalue);
 //        numericalResult.setQualityFlags((List<QualityFlag>) qualityFlag);
 //        numericalResult.setAdditionalValues(getAdditionalValue(realNodePath));
         observation.setResult(numericalResult);
