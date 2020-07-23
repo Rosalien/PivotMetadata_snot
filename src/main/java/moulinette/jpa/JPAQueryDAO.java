@@ -266,11 +266,13 @@ public class JPAQueryDAO {
     String querySensor = " SELECT distinct date_debut,"
             + "(CASE "
             + "WHEN date_fin is null "
-            + "THEN( "
-            + "select to_char(max(maxdate),'YYYY-MM-DDThh:mm:ssZ') as date_fin "
+            + "THEN( "           
+            + "select distinct date_fin "
+            + "from ( "
+            + "select concat(code_site_station,',',theme,',',datatype,',',code_site_station,'-',datatype,'-',variable,'-',unite) as path,to_char(maxdate,'YYYY-MM-DDThh:mm:ssZ') as date_fin "
             + "from carac_data_sensor_method_prod "
-            + "where code_jeu like ?2 "
-            + "group by code_jeu "
+            + ")a "
+            + "where a.path = ?1 "
             + ") "
             + "ELSE date_fin "
             + "END), code,fabricant,libelle_en,infos_calibration "
@@ -284,13 +286,12 @@ public class JPAQueryDAO {
             + "where rn.path = ?1 "
             + "and l.colonne like 'description' "
             + ")a ";
-
-    public List<Object[]> getPhysicalSensor(String realnodePath, String codeJeu) {
+    
+    public List<Object[]> getPhysicalSensor(String realnodePath) {
 
         return entityManager
                 .createNativeQuery(querySensor)
                 .setParameter(1, realnodePath)
-                .setParameter(2, codeJeu)
                 .getResultList();
     }
 

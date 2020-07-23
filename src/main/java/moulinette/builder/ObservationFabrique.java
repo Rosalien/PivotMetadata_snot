@@ -85,7 +85,7 @@ public class ObservationFabrique {
         /**
          * Set the procedure
          */
-        procedure(realNodePath, codeJeu, observation);
+        procedure(realNodePath, observation);
 
 //        sensor(realNodePath, observation);
         /**
@@ -155,9 +155,9 @@ public class ObservationFabrique {
         observation.setObservedProperty(observedProperty);
     }
 
-    private void procedure(String realNodePath, String codeJeu, Observation observation) {
+    private void procedure(String realNodePath, Observation observation) {
         Procedure procedure = new Procedure();
-        DataProduction testSetDataProduction = buildDataProduction(realNodePath, codeJeu);
+        DataProduction testSetDataProduction = buildDataProduction(realNodePath);
 //        System.out.println("TEST = " + (testSetDataProduction != null));
         if (testSetDataProduction != null) {
             procedure.setDataProduction(testSetDataProduction);
@@ -181,9 +181,9 @@ public class ObservationFabrique {
         return lineageinformations;
     }
 
-    private DataProduction buildDataProduction(String realNodePath, String codeJeu) {
+    private DataProduction buildDataProduction(String realNodePath) {
         DataProduction dataProduction = new DataProduction();
-        List<Sensor> testGetSensors = getSensors(realNodePath, codeJeu);
+        List<Sensor> testGetSensors = getSensors(realNodePath);
         
 //        System.out.println("buildDataProduction = " + !testGetSensors.isEmpty());
         
@@ -207,7 +207,7 @@ public class ObservationFabrique {
 //        sensor.setActivityPeriods(getActivityPeriod(realNodePath));
 //        return sensor;
 //    }
-    private List<Sensor> getSensors(String realNodePath, String codeJeu) {
+    private List<Sensor> getSensors(String realNodePath) {
 
         List<Sensor> sensors = new ArrayList<>();
 //        sensor.getActivityPeriods().add(new TemporalExtent(validPeriod[0], validPeriod[1]));
@@ -220,7 +220,7 @@ public class ObservationFabrique {
 //        sensorVirtuel.setName(name);
 //        sensorVirtuel.setParametrisationDescription(parametrisationDescription);
 //        sensors.add(sensorVirtuel);
-        requeteDAO.getPhysicalSensor(realNodePath, codeJeu)
+        requeteDAO.getPhysicalSensor(realNodePath)
                 .stream()
                 .map(PhysicalSensor::new)
                 .forEach(sensors::add);
