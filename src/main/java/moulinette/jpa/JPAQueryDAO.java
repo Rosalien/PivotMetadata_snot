@@ -136,12 +136,12 @@ public class JPAQueryDAO {
                 .getResultList();
     }
 
-    //Requête pour récupérer tous les path du SNO-T
-    String queryAllRealNodePath = "SELECT "
-            + "PATH "
-            + "FROM datatype_unite_variable_snot_vdt as dtuv "
-            + "INNER JOIN Jeu as j on j.jeu_id=dtuv.jeu_id "
-            + "INNER JOIN realnode as rn on rn.id_nodeable = dtuv.sdvu_id ";
+    //Requête pour récupérer tous les path diffusées du SNO-T 
+    String queryAllRealNodePath = "select distinct PATH "
+            + "from ( "
+            + "select concat(code_site_station,',',theme,',',datatype,',',code_site_station,'-',datatype,'-',variable,'-',unite) as PATH "
+            + "from carac_data_sensor_method_prod "
+            + ")a ";
 
     public List<String> getAllRealNodePaths() {
         return entityManager
