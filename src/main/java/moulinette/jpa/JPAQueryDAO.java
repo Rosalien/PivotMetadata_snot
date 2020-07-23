@@ -122,13 +122,13 @@ public class JPAQueryDAO {
                 .getResultList();
     }
 
-    String queryRealNodePath = "SELECT "
-            + "PATH "
-            + "FROM datatype_unite_variable_snot_vdt as dtuv "
-            + "INNER JOIN Jeu as j on j.jeu_id=dtuv.jeu_id "
-            + "INNER JOIN realnode as rn on rn.id_nodeable = dtuv.sdvu_id "
-            + "WHERE code_jeu = ?1";
-
+    String queryRealNodePath = "select distinct PATH "
+            + "from ( "
+            + "select concat(code_site_station,',',theme,',',datatype,',',code_site_station,'-',datatype,'-',variable,'-',unite) as PATH "
+            + "from carac_data_sensor_method_prod "
+            + "WHERE code_jeu = ?1 "
+            + ")a ";
+    
     public List<String> getRealNodePaths(String codeJeu) {
         return entityManager
                 .createNativeQuery(queryRealNodePath)

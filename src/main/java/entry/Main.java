@@ -27,10 +27,10 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        String driverClassName  = "org.postgresql.Driver"            ;
-        String connectionUrl    = "jdbc:postgresql://localhost:5437/snotbdprod" ;
-        String userName         = "snotuserprod"                          ;
-        String password         = "&!uQbr@prodOn"                    ;
+        String driverClassName = "org.postgresql.Driver";
+        String connectionUrl = "jdbc:postgresql://localhost:5432/sno";
+        String userName = "snouser";
+        String password = "sno001";
 //           
 //        String driverClassName  = "org.postgresql.Driver"            ;
 //        String connectionUrl    = "jdbc:postgresql://localhost:5432/sno" ;
